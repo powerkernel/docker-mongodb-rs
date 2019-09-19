@@ -3,9 +3,6 @@ version: '3.7'
 services:
   rs0:
     image: mongo:4.2
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     labels:
       docker.service: mongodb  
     ports:
@@ -29,9 +26,6 @@ services:
     command: --config /etc/mongod.conf
   rs1:
     image: mongo:4.2
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     labels:
       docker.service: mongodb  
     ports:
@@ -55,9 +49,6 @@ services:
     command: --config /etc/mongod.conf
   rs2:
     image: mongo:4.2
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
     labels:
       docker.service: mongodb  
     ports:
