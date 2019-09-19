@@ -18,8 +18,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      restart_policy:
-        condition: on-failure
       placement:
         constraints:
           - node.labels.mongo.rs == 0
@@ -41,8 +39,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      restart_policy:
-        condition: on-failure
       placement:
         constraints:
           - node.labels.mongo.rs == 1
@@ -64,8 +60,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      restart_policy:
-        condition: on-failure
       placement:
         constraints:
           - node.labels.mongo.rs == 2
