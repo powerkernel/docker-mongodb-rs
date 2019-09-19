@@ -17,7 +17,7 @@ services:
       - /data/mongodb/db:/data/db
       - /data/mongodb/mongod.conf:/etc/mongod.conf
       - /data/mongodb/keyfile:/etc/mongodb/keyfile
-      - /root/ssl/hostname:/etc/mongodb/ssl      
+      - /root/certs/hostname:/etc/mongodb/cert      
     deploy:
       mode: replicated
       replicas: 1
@@ -43,7 +43,7 @@ services:
       - /data/mongodb/db:/data/db
       - /data/mongodb/mongod.conf:/etc/mongod.conf
       - /data/mongodb/keyfile:/etc/mongodb/keyfile
-      - /root/ssl/hostname:/etc/mongodb/ssl  
+      - /root/certs/hostname:/etc/mongodb/cert  
     deploy:
       mode: replicated
       replicas: 1
@@ -69,7 +69,7 @@ services:
       - /data/mongodb/db:/data/db
       - /data/mongodb/mongod.conf:/etc/mongod.conf
       - /data/mongodb/keyfile:/etc/mongodb/keyfile
-      - /root/ssl/hostname:/etc/mongodb/ssl  
+      - /root/certs/hostname:/etc/mongodb/cert  
     deploy:
       mode: replicated
       replicas: 1
