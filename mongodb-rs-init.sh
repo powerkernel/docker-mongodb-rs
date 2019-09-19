@@ -1,5 +1,9 @@
 #!/bin/sh
 mkdir -p /data/mongodb/db
+openssl rand -base64 756 > /data/mongodb/keyfile
+chmod 400 /data/mongodb/keyfile
+chown 999 /data/mongodb/keyfile
+curl -o /data/mongodb/mongod.conf https://raw.githubusercontent.com/powerkernel/docker-mongodb-rs/master/mongod.conf
 mkdir -p /root/scripts
 mkdir -p /root/certs/hostname
 mkdir -p /root/certs/all
