@@ -1,0 +1,81 @@
+version: '3.7'
+
+services:
+  rs0:
+    image: mongo:4.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    labels:
+      docker.service: mongodb  
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
+    volumes:
+      - /data/mongodb/db:/data/db
+      - /data/mongodb/mongod.conf:/etc/mongod.conf
+      - /data/mongodb/keyfile:/etc/mongodb/keyfile
+      - /root/ssl/hostname:/etc/mongodb/ssl      
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.mongo.rs == 0
+    command: --config /etc/mongod.conf
+  rs1:
+    image: mongo:4.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    labels:
+      docker.service: mongodb  
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
+    volumes:
+      - /data/mongodb/db:/data/db
+      - /data/mongodb/mongod.conf:/etc/mongod.conf
+      - /data/mongodb/keyfile:/etc/mongodb/keyfile
+      - /root/ssl/hostname:/etc/mongodb/ssl  
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.mongo.rs == 1
+    command: --config /etc/mongod.conf
+  rs2:
+    image: mongo:4.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    labels:
+      docker.service: mongodb  
+    ports:
+      - target: 27017
+        published: 27017
+        protocol: tcp
+        mode: host
+    volumes:
+      - /data/mongodb/db:/data/db
+      - /data/mongodb/mongod.conf:/etc/mongod.conf
+      - /data/mongodb/keyfile:/etc/mongodb/keyfile
+      - /root/ssl/hostname:/etc/mongodb/ssl  
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.labels.mongo.rs == 2
+    command: --config /etc/mongod.conf
