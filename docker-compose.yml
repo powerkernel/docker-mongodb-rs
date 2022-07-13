@@ -1,10 +1,11 @@
 version: '3.7'
 
-services:
-  rs0:
-    image: mongo:4.2
+#service template
+x-mongodb:
+  &mongodb
+  image: mongo:4.2
     labels:
-      docker.service: mongodb  
+      docker.service: mongodb
     ports:
       - target: 27017
         published: 27017
@@ -14,53 +15,31 @@ services:
       - /data/mongodb/db:/data/db
       - /data/mongodb/mongod.conf:/etc/mongod.conf
       - /data/mongodb/keyfile:/etc/mongodb/keyfile
-      - /root/certs/hostname:/etc/mongodb/cert      
+      - /root/certs/hostname:/etc/mongodb/cert
+    deploy:
+      mode: replicated
+      replicas: 1
+    command: --config /etc/mongod.conf
+
+#service instances
+services:
+  rs0:
+    <<: *mongodb
     deploy:
       mode: replicated
       replicas: 1
       placement:
         constraints:
           - node.labels.mongo.rs == 0
-    command: --config /etc/mongod.conf
   rs1:
-    image: mongo:4.2
-    labels:
-      docker.service: mongodb  
-    ports:
-      - target: 27017
-        published: 27017
-        protocol: tcp
-        mode: host
-    volumes:
-      - /data/mongodb/db:/data/db
-      - /data/mongodb/mongod.conf:/etc/mongod.conf
-      - /data/mongodb/keyfile:/etc/mongodb/keyfile
-      - /root/certs/hostname:/etc/mongodb/cert  
+    <<: *mongodb
     deploy:
-      mode: replicated
-      replicas: 1
       placement:
         constraints:
           - node.labels.mongo.rs == 1
-    command: --config /etc/mongod.conf
   rs2:
-    image: mongo:4.2
-    labels:
-      docker.service: mongodb  
-    ports:
-      - target: 27017
-        published: 27017
-        protocol: tcp
-        mode: host
-    volumes:
-      - /data/mongodb/db:/data/db
-      - /data/mongodb/mongod.conf:/etc/mongod.conf
-      - /data/mongodb/keyfile:/etc/mongodb/keyfile
-      - /root/certs/hostname:/etc/mongodb/cert  
+    <<: *mongodb
     deploy:
-      mode: replicated
-      replicas: 1
       placement:
         constraints:
           - node.labels.mongo.rs == 2
-    command: --config /etc/mongod.conf
